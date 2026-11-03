@@ -70,7 +70,7 @@ const router = Router();
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   get:
  *     summary: Retrieve all users
  *     tags: [Users]
@@ -88,7 +88,7 @@ router.get('/', getUsers);
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   get:
  *     summary: Retrieve a single user by ID
  *     tags: [Users]
@@ -114,7 +114,7 @@ router.get('/:id', getUserById);
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   post:
  *     summary: Create a new user
  *     tags: [Users]
@@ -140,7 +140,7 @@ router.post('/', createUser);
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   put:
  *     summary: Update an existing user
  *     tags: [Users]
@@ -172,7 +172,7 @@ router.put('/:id', updateUser);
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   delete:
  *     summary: Delete a user
  *     tags: [Users]

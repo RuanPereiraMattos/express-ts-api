@@ -13,16 +13,16 @@ beforeEach(async () => {
 
 describe('GET /users', () => {
   it('returns 200 with empty array initially', async () => {
-    const res = await request(app).get('/users');
+    const res = await request(app).get('/api/users');
     expect(res.status).toBe(200);
     expect(res.body).toEqual([]);
   });
 
   it('returns all created users', async () => {
-    await request(app).post('/users').send({ name: 'Alice', email: 'alice@example.com' });
-    await request(app).post('/users').send({ name: 'Bob', email: 'bob@example.com' });
+    await request(app).post('/api/users').send({ name: 'Alice', email: 'alice@example.com' });
+    await request(app).post('/api/users').send({ name: 'Bob', email: 'bob@example.com' });
 
-    const res = await request(app).get('/users');
+    const res = await request(app).get('/api/users');
     expect(res.status).toBe(200);
     expect(res.body).toHaveLength(2);
   });
@@ -31,7 +31,7 @@ describe('GET /users', () => {
 describe('POST /users', () => {
   it('creates a user and returns 201 with full user object', async () => {
     const res = await request(app)
-      .post('/users')
+      .post('/api/users')
       .send({ name: 'Alice', email: 'alice@example.com' });
 
     expect(res.status).toBe(201);
@@ -41,20 +41,20 @@ describe('POST /users', () => {
   });
 
   it('returns 400 when name is missing', async () => {
-    const res = await request(app).post('/users').send({ email: 'alice@example.com' });
+    const res = await request(app).post('/api/users').send({ email: 'alice@example.com' });
     expect(res.status).toBe(400);
     expect(res.body).toEqual({ message: 'name and email are required' });
   });
 
   it('returns 400 when email is missing', async () => {
-    const res = await request(app).post('/users').send({ name: 'Alice' });
+    const res = await request(app).post('/api/users').send({ name: 'Alice' });
     expect(res.status).toBe(400);
     expect(res.body).toEqual({ message: 'name and email are required' });
   });
 
   it('returns 409 when email is already in use', async () => {
-    await request(app).post('/users').send({ name: 'Alice', email: 'alice@example.com' });
-    const res = await request(app).post('/users').send({ name: 'Alice2', email: 'alice@example.com' });
+    await request(app).post('/api/users').send({ name: 'Alice', email: 'alice@example.com' });
+    const res = await request(app).post('/api/users').send({ name: 'Alice2', email: 'alice@example.com' });
     expect(res.status).toBe(409);
     expect(res.body).toEqual({ message: 'Email already in use' });
   });
@@ -63,16 +63,16 @@ describe('POST /users', () => {
 describe('GET /users/:id', () => {
   it('returns 200 with the correct user', async () => {
     const created = await request(app)
-      .post('/users')
+      .post('/api/users')
       .send({ name: 'Alice', email: 'alice@example.com' });
 
-    const res = await request(app).get(`/users/${created.body.id}`);
+    const res = await request(app).get(`/api/users/${created.body.id}`);
     expect(res.status).toBe(200);
     expect(res.body).toMatchObject({ name: 'Alice', email: 'alice@example.com' });
   });
 
   it('returns 404 for unknown id', async () => {
-    const res = await request(app).get('/users/non-existent-id');
+    const res = await request(app).get('/api/users/non-existent-id');
     expect(res.status).toBe(404);
     expect(res.body).toEqual({ message: 'User not found' });
   });
@@ -81,11 +81,11 @@ describe('GET /users/:id', () => {
 describe('PUT /users/:id', () => {
   it('updates the user and returns 200', async () => {
     const created = await request(app)
-      .post('/users')
+      .post('/api/users')
       .send({ name: 'Alice', email: 'alice@example.com' });
 
     const res = await request(app)
-      .put(`/users/${created.body.id}`)
+      .put(`/api/users/${created.body.id}`)
       .send({ name: 'Alice Updated' });
 
     expect(res.status).toBe(200);
@@ -94,7 +94,7 @@ describe('PUT /users/:id', () => {
   });
 
   it('returns 404 for unknown id', async () => {
-    const res = await request(app).put('/users/non-existent-id').send({ name: 'X' });
+    const res = await request(app).put('/api/users/non-existent-id').send({ name: 'X' });
     expect(res.status).toBe(404);
   });
 });
@@ -102,26 +102,26 @@ describe('PUT /users/:id', () => {
 describe('DELETE /users/:id', () => {
   it('deletes the user and returns 204', async () => {
     const created = await request(app)
-      .post('/users')
+      .post('/api/users')
       .send({ name: 'Alice', email: 'alice@example.com' });
 
-    const res = await request(app).delete(`/users/${created.body.id}`);
+    const res = await request(app).delete(`/api/users/${created.body.id}`);
     expect(res.status).toBe(204);
   });
 
   it('returns 404 after deletion on GET', async () => {
     const created = await request(app)
-      .post('/users')
+      .post('/api/users')
       .send({ name: 'Alice', email: 'alice@example.com' });
 
-    await request(app).delete(`/users/${created.body.id}`);
+    await request(app).delete(`/api/users/${created.body.id}`);
 
-    const res = await request(app).get(`/users/${created.body.id}`);
+    const res = await request(app).get(`/api/users/${created.body.id}`);
     expect(res.status).toBe(404);
   });
 
   it('returns 404 for unknown id', async () => {
-    const res = await request(app).delete('/users/non-existent-id');
+    const res = await request(app).delete('/api/users/non-existent-id');
     expect(res.status).toBe(404);
   });
 });

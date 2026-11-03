@@ -1,0 +1,113 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f5f5f5;
+  color: #111;
+}
+
+.container {
+  max-width: 760px;
+  margin: 48px auto;
+  padding: 0 16px;
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin-bottom: 24px;
+}
+
+.create-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.create-form input {
+  flex: 1;
+  min-width: 160px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.create-form button {
+  padding: 8px 16px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.create-form button:hover { background: #333; }
+
+.error {
+  color: #c0392b;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.empty {
+  color: #888;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
+th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #666;
+  border-bottom: 1px solid #eee;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+}
+
+tr:last-child td { border-bottom: none; }
+
+td input {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.actions { display: flex; gap: 6px; }
+
+.actions button {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.edit   { background: #e8f0fe; color: #1a73e8; }
+.save   { background: #e6f4ea; color: #1e8e3e; }
+.cancel { background: #f1f3f4; color: #555; }
+.delete { background: #fce8e6; color: #c0392b; }
+
+.edit:hover   { background: #d2e3fc; }
+.save:hover   { background: #ceead6; }
+.cancel:hover { background: #e2e5e9; }
+.delete:hover { background: #f5c6c2; }

@@ -11,7 +11,7 @@ const router = Router();
 
 /**
  * @swagger
- * /health:
+ * /api/health:
  *   get:
  *     summary: Server health check
  *     tags: [Health]

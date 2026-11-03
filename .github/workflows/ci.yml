@@ -24,3 +24,6 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+      - name: Build frontend
+        run: cd client && npm ci && npm run build

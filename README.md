@@ -1,12 +1,13 @@
-# TypeScript Swagger API
+# express-ts-api
 
-A sample REST API built with **Express v5** and **TypeScript**, with interactive documentation served by **Swagger UI**.
+A full-stack app with a **React** frontend and a **REST API** built with **Express v5** and **TypeScript**, with interactive documentation served by **Swagger UI**.
 
 ## Tech Stack
 
+- **Frontend**: React 19 + Vite
 - **Runtime**: Node.js (ESM)
 - **Framework**: Express v5
-- **Language**: TypeScript 7
+- **Language**: TypeScript
 - **Documentation**: swagger-jsdoc + swagger-ui-express
 - **Database**: Turso (libSQL / SQLite)
 - **Tests**: Vitest + Supertest
@@ -16,54 +17,60 @@ A sample REST API built with **Express v5** and **TypeScript**, with interactive
 **Install dependencies:**
 ```bash
 npm install
+cd client && npm install && cd ..
 ```
 
-**Start the development server:**
+**Run locally (two terminals):**
 ```bash
+# Terminal 1 — API on :3000
 npm run dev
+
+# Terminal 2 — Frontend on :5173
+cd client && npm run dev
 ```
 
-The server starts on port `3000` (configurable via `.env`).
-
-**Open the interactive API docs:**
-```
-http://localhost:3000/api-docs
-```
+Open [http://localhost:5173](http://localhost:5173) for the app, or [http://localhost:3000/api-docs](http://localhost:3000/api-docs) for the Swagger UI.
 
 ## Scripts
 
 ```bash
-npm run dev          # start dev server with tsx (no build step needed)
+npm run dev          # start API with tsx (no build step needed)
 npm run build        # compile TypeScript to dist/
 npm run start        # run compiled output (requires build first)
 npm test             # run all tests once
 npm run test:watch   # run tests in watch mode
 ```
 
-## Endpoints
+## API Endpoints
+
+All routes are prefixed with `/api`.
 
 ### Health
 
 | Method | Path | Description |
 |---|---|---|
-| GET | `/health` | Returns current server time |
+| GET | `/api/health` | Returns current server time |
 
 ### Users
 
 | Method | Path | Description |
 |---|---|---|
-| GET | `/users` | List all users |
-| GET | `/users/:id` | Get user by ID |
-| POST | `/users` | Create a user |
-| PUT | `/users/:id` | Update a user |
-| DELETE | `/users/:id` | Delete a user |
+| GET | `/api/users` | List all users |
+| GET | `/api/users/:id` | Get user by ID |
+| POST | `/api/users` | Create a user |
+| PUT | `/api/users/:id` | Update a user |
+| DELETE | `/api/users/:id` | Delete a user |
 
 > Data persists in Turso (serverless SQLite). Locally you can use `file::memory:` in `.env` for ephemeral testing.
 
 ## Project Structure
 
 ```
-src/
+client/                             # React + Vite frontend
+├── src/
+│   ├── App.tsx                     # CRUD UI
+│   └── api.ts                      # fetch wrapper
+src/                                # Express API
 ├── index.ts                        # Entry point — starts the server
 ├── app.ts                          # Express app setup (without listen)
 ├── swagger.ts                      # swagger-jsdoc configuration
@@ -75,15 +82,15 @@ src/
 ├── controllers/
 │   └── users.controller.ts         # HTTP handlers
 └── routes/
-    ├── health.ts                   # GET /health
-    └── users.ts                    # /users routes + OpenAPI annotations
+    ├── health.ts                   # GET /api/health
+    └── users.ts                    # /api/users routes + OpenAPI annotations
 api/
 └── index.ts                        # Vercel serverless entry point
 ```
 
 ## Environment Variables
 
-Create a `.env` file at the project root:
+Create a `.env` file at the project root (see `.env.example`):
 
 ```env
 PORT=3000

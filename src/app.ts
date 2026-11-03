@@ -16,7 +16,7 @@ app.use((_req: Request, _res: Response, next: NextFunction) => {
 });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use('/health', healthRouter);
-app.use('/users', usersRouter);
+app.use('/api/health', healthRouter);
+app.use('/api/users', usersRouter);
 
 export default app;
